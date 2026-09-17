@@ -1,0 +1,26 @@
+services:
+  tehokas:
+    image: ${CI_REGISTRY_IMAGE:-tehokas}:${IMAGE_TAG:-latest}
+    build:
+      target: production
+    environment:
+      - APP_ENV=production
+    volumes:
+      - ./.env:/var/www/.env
+      - tehokas_assets:/var/www/public
+
+  tehokas_nginx:
+    volumes:
+      - ./docker/nginx/nginx-prod.conf:/etc/nginx/conf.d/default.conf
+      - tehokas_assets:/var/www/public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.tehokas.rule=Host(`tehokas.orbitsuniverse.com.br`)"
+      - "traefik.http.routers.tehokas.entrypoints=websecure"
+      - "traefik.http.routers.tehokas.tls=true"
+      - "traefik.http.routers.tehokas.tls.certresolver=myresolver"
+      - "traefik.http.services.tehokas.loadbalancer.server.port=80"
+      - "traefik.docker.network=server_infra_traefik"
+
+volumes:
+  tehokas_assets:
