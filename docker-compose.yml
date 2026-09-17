@@ -1,0 +1,32 @@
+services:
+  tehokas:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tehokas
+    working_dir: /var/www
+    entrypoint: ["/usr/local/bin/docker-entrypoint.sh"]
+    command: ["php-fpm"]
+    restart: unless-stopped
+    networks:
+      - default
+      - postgres
+
+  tehokas_nginx:
+    image: nginx:1.31.2-alpine
+    container_name: tehokas_nginx
+    depends_on:
+      - tehokas
+    restart: unless-stopped
+    networks:
+      - traefik
+      - default
+
+networks:
+  traefik:
+    name: server_infra_traefik
+    external: true
+  postgres:
+    name: server_infra_postgres
+    external: true
+  default:
