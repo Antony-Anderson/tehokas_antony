@@ -1,11 +1,11 @@
 # ===== ESTÁGIO 1: COMPILAÇÃO DOS ASSETS DE PRODUÇÃO (NODE) =====
-FROM node:18-alpine AS frontend-builder
+FROM node:22-alpine AS frontend-builder
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
 
-RUN npm run prod
+RUN npm run build
 
 
 # ===== ESTÁGIO 2: BASE COMUM DO PHP =====
