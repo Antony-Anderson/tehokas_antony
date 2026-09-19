@@ -7,6 +7,7 @@ import {
     X,
     Sun,
     Moon,
+    User,
 } from 'lucide-react';
 
 export default function AppLayout({ children, title }) {
@@ -93,7 +94,7 @@ export default function AppLayout({ children, title }) {
                                 )}
                             </button>
 
-                            <div className="flex items-center gap-3 pl-3 border-l border-slate-200 dark:border-white/10">
+                            <Link href="/profile" className="flex items-center gap-3 pl-3 border-l border-slate-200 dark:border-white/10 hover:opacity-80 transition-opacity">
                                 <div className="text-right">
                                     <p className="text-sm font-medium text-slate-800 dark:text-slate-200">{auth?.user?.name}</p>
                                     <p className="text-xs text-slate-500">{auth?.user?.email}</p>
@@ -101,7 +102,7 @@ export default function AppLayout({ children, title }) {
                                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white text-sm font-bold shadow-md shadow-indigo-500/20">
                                     {auth?.user?.name?.charAt(0)?.toUpperCase()}
                                 </div>
-                            </div>
+                            </Link>
                             <button
                                 type="button"
                                 onClick={handleLogoutClick}
@@ -144,6 +145,14 @@ export default function AppLayout({ children, title }) {
                         >
                             <FolderKanban className="w-4 h-4" />
                             Projetos
+                        </Link>
+                        <Link
+                            href="/profile"
+                            className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-white/5"
+                            onClick={() => setMenuOpen(false)}
+                        >
+                            <User className="w-4 h-4" />
+                            Perfil
                         </Link>
                         <button
                             type="button"
