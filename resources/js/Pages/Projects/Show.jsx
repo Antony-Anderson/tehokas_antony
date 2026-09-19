@@ -12,6 +12,7 @@ export default function Show({ project, columns }) {
     const [taskModal, setTaskModal] = useState(null);
     const [filterPriority, setFilterPriority] = useState('all');
     const [editingProject, setEditingProject] = useState(false);
+    const [isDragActive, setIsDragActive] = useState(false);
 
     const { data, setData, put, processing } = useForm({
         title: project.title,
@@ -40,6 +41,12 @@ export default function Show({ project, columns }) {
         return tasks.filter(t => {
             return filterPriority === 'all' || t.priority === filterPriority;
         });
+    }
+
+    function handleDrop(taskId, newStatus) {
+        router.put(`/projects/${project.id}/tasks/${taskId}`, {
+            status: newStatus,
+        }, { preserveScroll: true });
     }
 
     const filteredColumns = {
@@ -177,6 +184,8 @@ export default function Show({ project, columns }) {
                         projectId={project.id}
                         onAddTask={() => openAddTask(status)}
                         onEditTask={openEditTask}
+                        onDrop={handleDrop}
+                        isDragActive={isDragActive}
                     />
                 ))}
             </div>
