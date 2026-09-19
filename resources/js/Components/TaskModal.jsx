@@ -36,40 +36,35 @@ export default function TaskModal({ projectId, task, defaultStatus, onClose }) {
         }
     }
 
-    const inputClass = "w-full bg-slate-950/50 border border-white/10 rounded-xl py-2.5 px-4 text-slate-100 placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all text-sm";
-    const labelClass = "block text-xs font-medium text-slate-400 mb-1.5";
+    const inputClass = "w-full bg-white dark:bg-slate-950/50 border border-slate-300 dark:border-white/10 rounded-xl py-2.5 px-4 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all text-sm shadow-sm";
+    const labelClass = "block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1.5";
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            {/* Backdrop */}
             <div
-                className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm"
+                className="absolute inset-0 bg-slate-900/40 dark:bg-slate-950/80 backdrop-blur-sm"
                 onClick={onClose}
             />
 
-            {/* Modal */}
-            <div className="relative w-full max-w-lg bg-slate-900 border border-white/10 rounded-2xl shadow-2xl shadow-black/50">
-                {/* Header */}
-                <div className="flex items-center justify-between p-6 border-b border-white/5">
+            <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl shadow-slate-900/10 dark:shadow-black/50">
+                <div className="flex items-center justify-between p-6 border-b border-slate-100 dark:border-white/5">
                     <div>
-                        <h2 className="text-lg font-semibold text-slate-100">
+                        <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100">
                             {isEditing ? 'Editar Tarefa' : 'Nova Tarefa'}
                         </h2>
-                        <p className="text-xs text-slate-500 mt-0.5">
+                        <p className="text-xs text-slate-500 dark:text-slate-500 mt-0.5">
                             {isEditing ? 'Altere os dados da tarefa' : 'Adicione uma nova tarefa ao projeto'}
                         </p>
                     </div>
                     <button
                         onClick={onClose}
-                        className="p-2 rounded-xl text-slate-500 hover:text-slate-300 hover:bg-white/5 transition-all"
+                        className="p-2 rounded-xl text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 transition-all"
                     >
                         <X className="w-5 h-5" />
                     </button>
                 </div>
 
-                {/* Form */}
                 <form onSubmit={handleSubmit} className="p-6 space-y-4">
-                    {/* Title */}
                     <div>
                         <label className={labelClass}>Título *</label>
                         <input
@@ -80,10 +75,9 @@ export default function TaskModal({ projectId, task, defaultStatus, onClose }) {
                             placeholder="Ex: Criar tela de login"
                             autoFocus
                         />
-                        {errors.title && <p className="text-rose-400 text-xs mt-1">{errors.title}</p>}
+                        {errors.title && <p className="text-rose-500 dark:text-rose-400 text-xs mt-1">{errors.title}</p>}
                     </div>
 
-                    {/* Description */}
                     <div>
                         <label className={labelClass}>
                             <span className="flex items-center gap-1.5"><AlignLeft className="w-3 h-3" /> Descrição</span>
@@ -97,7 +91,6 @@ export default function TaskModal({ projectId, task, defaultStatus, onClose }) {
                         />
                     </div>
 
-                    {/* Status + Priority */}
                     <div className="grid grid-cols-2 gap-3">
                         <div>
                             <label className={labelClass}>
@@ -129,7 +122,6 @@ export default function TaskModal({ projectId, task, defaultStatus, onClose }) {
                         </div>
                     </div>
 
-                    {/* Deadline */}
                     <div>
                         <label className={labelClass}>
                             <span className="flex items-center gap-1.5"><Calendar className="w-3 h-3" /> Prazo (Deadline)</span>
@@ -138,17 +130,16 @@ export default function TaskModal({ projectId, task, defaultStatus, onClose }) {
                             type="date"
                             value={data.deadline}
                             onChange={e => setData('deadline', e.target.value)}
-                            className={`${inputClass} [color-scheme:dark]`}
+                            className={`${inputClass} dark:[color-scheme:dark]`}
                         />
-                        {errors.deadline && <p className="text-rose-400 text-xs mt-1">{errors.deadline}</p>}
+                        {errors.deadline && <p className="text-rose-500 dark:text-rose-400 text-xs mt-1">{errors.deadline}</p>}
                     </div>
 
-                    {/* Actions */}
                     <div className="flex items-center gap-3 pt-2">
                         <button
                             type="button"
                             onClick={onClose}
-                            className="flex-1 py-2.5 rounded-xl border border-white/10 text-sm text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all"
+                            className="flex-1 py-2.5 rounded-xl border border-slate-300 dark:border-white/10 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5 transition-all"
                         >
                             Cancelar
                         </button>
