@@ -1,58 +1,137 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🚀 TaskFlow - Gestão de Tarefas de Projetos (MVP)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+> **Desafio Técnico Tehokas** - Desenvolvedor Full Stack  
+> Aplicação Web para gestão eficiente de projetos e tarefas com monitoramento automatizado do **Indicador de Saúde do Projeto**.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📋 Sobre o Projeto
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+O **TaskFlow** é uma ferramenta intuitiva desenvolvida para auxiliar consultores e equipes a organizarem seus projetos e acompanharem o andamento de etapas críticas. 
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Um dos principais diferenciais da aplicação é a análise preditiva da saúde dos projetos: quando mais de **20% das tarefas estão atrasadas** em relação ao deadline estipulado, o projeto entra automaticamente em estado de **"Em Alerta"**, permitindo ação rápida da equipe antes que o processo falhe.
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## ✨ Funcionalidades
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- 🔒 **Autenticação Completa**: Cadastro de usuário, Login, Logout e proteção de rotas via Middleware.
+- 📊 **Dashboard de Projetos**: Listagem geral de projetos com contadores, busca em tempo real e destaque para projetos em alerta.
+- 📋 **Quadro Kanban Interativo**: Visualização de tarefas divididas em 3 colunas (*Pendente*, *Em Andamento*, *Concluída*) com suporte a interações fluidas e atualização em tempo real.
+- 🚨 **Indicador de Saúde Automatizado**:
+  $$\text{Se } \frac{\text{Tarefas Atrasadas}}{\text{Total de Tarefas}} > 20\% \implies \text{Status: "Em Alerta" (Alert)}$$
+- 🔍 **Filtros e Priorização**: Filtragem avançada de tarefas por prioridade (*Baixa*, *Média*, *Alta*).
+- 🌓 **Modo Claro & Escuro (Light / Dark Mode)**: Alternador visual na barra superior e na página de perfil com persistência em `localStorage`.
+- 👤 **Gestão de Perfil**: Visualização de métricas pessoais, alteração do nome de exibição e troca de senha segura.
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+---
 
-## Agentic Development
+## 🛠️ Tecnologias Utilizadas
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+### **Backend**
+- **PHP 8.3+** & **Laravel 13**
+- **Eloquent ORM** (Relacionamentos `Project` $\to$ `Task`, Accessors dinâmicos para regras de negócio)
+- **Inertia.js** (Integração sem costura entre Laravel e SPA React)
 
-```bash
-composer require laravel/boost --dev
+### **Frontend**
+- **React.js** (Comunicação com Inertia)
+- **Tailwind CSS** (Design responsivo, moderno e suporte a Dark Mode)
+- **Lucide React** (Ícones modernos)
 
-php artisan boost:install
+### **Ambiente & Banco de Dados**
+- **Docker & Docker Compose**
+- **MySQL / SQLite**
+
+---
+
+## 🚀 Como Rodar o Projeto
+
+### Pré-requisitos
+- [Git](https://git-scm.com/)
+- [Docker](https://www.docker.com/) e Docker Compose **OU** PHP 8.2+ & Composer instalados localmente.
+
+---
+
+### Opção A: Execução com Docker (Recomendado)
+
+1. **Clonar o repositório:**
+   ```bash
+   git clone https://github.com/Antony-Anderson/tehokas_antony.git
+   cd tehokas_antony
+   ```
+
+2. **Subir os containers com Docker Compose:**
+   ```bash
+   docker compose up -d --build
+   ```
+
+3. **Instalar dependências e executar as migrations:**
+   ```bash
+   docker compose exec app composer install
+   docker compose exec app php artisan key:generate
+   docker compose exec app php artisan migrate --seed
+   ```
+
+4. **Compilar os ativos do frontend:**
+   ```bash
+   docker compose exec app npm install
+   docker compose exec app npm run dev
+   ```
+
+5. **Acessar a aplicação:**
+   Abra no navegador em `http://localhost:8000` (ou porta configurada no seu Docker).
+
+---
+
+## 📂 Estrutura de Diretórios Principais
+
+```
+tehokas_antony/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── AuthController.php      # Autenticação de Usuários
+│   │   │   ├── ProjectController.php   # CRUD e Estatísticas de Projetos
+│   │   │   ├── TaskController.php      # Gestão do Kanban e Status das Tarefas
+│   │   │   └── ProfileController.php   # Perfil e Alteração de Senha
+│   ├── Models/
+│   │   ├── Project.php                 # Modelo Project e cálculo da Saúde
+│   │   ├── Task.php                    # Modelo Task e cálculo de Atrasos
+│   │   └── User.php                    # Modelo de Autenticação
+├── database/
+│   └── migrations/                     # Migrações das tabelas Projects e Tasks
+├── resources/
+│   ├── js/
+│   │   ├── Components/                 # Componentes reutilizáveis (AppLayout, KanbanColumn, TaskCard)
+│   │   └── Pages/
+│   │       ├── Auth/                   # Login e Registro
+│   │       ├── Projects/               # Dashboard e Quadro Kanban
+│   │       └── Profile/                # Edição de Perfil e Senha
+└── routes/
+    └── web.php                         # Rotas da aplicação protegidas por Auth
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+---
 
-## Contributing
+## ⚖️ Regra de Negócio: Cálculo do Indicador de Saúde
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+No arquivo [`app/Models/Project.php`](file:///home/antony/tehokas_antony/app/Models/Project.php), a regra de saúde é calculada dinamicamente via Accessor do Eloquent:
 
-## Code of Conduct
+```php
+public function getHealthStatusAttribute(): string
+{
+    $total = $this->tasks->count();
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    if ($total === 0) {
+        return 'healthy';
+    }
 
-## Security Vulnerabilities
+    $overdue = $this->tasks->filter(fn($task) => $task->is_overdue)->count();
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    return ($overdue / $total) > 0.20 ? 'alert' : 'healthy';
+}
+```
 
-## License
+Uma tarefa é considerada atrasada quando sua data limite (`deadline`) é menor que a data atual e seu status não é `completed` (Concluída).
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---

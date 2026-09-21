@@ -22,7 +22,7 @@ class ProfileController extends Controller
         
         $totalTasksCount = Task::whereIn('project_id', $userProjectIds)->count();
         $completedTasksCount = Task::whereIn('project_id', $userProjectIds)
-            ->where('status', 'concluido')
+            ->where('status', 'completed')
             ->count();
         $pendingTasksCount = $totalTasksCount - $completedTasksCount;
 
